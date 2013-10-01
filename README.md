@@ -59,8 +59,10 @@ Configuration
 Build Status
 ------------
 
+[![Build Status](https://secure.travis-ci.org/yahoo/mod_statuspage.png?branch=master)](http://travis-ci.org/yahoo/mod_statuspage)
+
 
 Node Badge
 ----------
 
-
+[![NPM](https://nodei.co/npm/mod_statuspage.png)](https://nodei.co/npm/mod_statuspage/)
