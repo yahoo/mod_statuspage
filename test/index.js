@@ -7,6 +7,7 @@
 var os = require('os'),
     vows = require('vows'),
     assert = require('assert'),
+    bl = require('bl'),
     mod_status = require('../lib/index.js'),
     rightnow = new Date();
 
@@ -104,37 +105,19 @@ var mockResponse = { '20799':
     // mock net
 var netMock =  {
     createConnection : function (socketPath) {
-        var onData = null,
-            onEvent = null,
-            self = this;
+        var socket;
 
-        process.nextTick(function () {
-            if (onData) {
-                onData.call(self, JSON.stringify(mockResponse));
-            }
-            if (onEvent) {
-                onEvent.call(self, {foo : 'bar'});
-            }
-        });
-        return {
-            on : function (what, fn) {
-                if (socketPath === 'error.sock') {
-                    if (what === 'error') {
-                        onEvent = fn;
-                    }
-                } else if (socketPath === 'error.on.close.sock') {
-                    if (what === 'close') {
-                        onEvent = fn;
-                    }
-                } else {
-                    if (what === 'data') {
-                        onData = fn;
-                    } else if (what === 'end') {
-                        onEvent = fn;
-                    }
-                }
-            }
-        };
+        // create a stream that'll pass on a Buffer
+        socket = bl(new Buffer(JSON.stringify(mockResponse)));
+
+        // faux errors from the stream for testing
+        if (socketPath === 'error.sock') {
+            process.nextTick(socket.emit.bind(socket, "error", new Error("err")));
+        } else if (socketPath === 'error.on.close.sock') {
+            process.nextTick(socket.emit.bind(socket, "close", new Error("err")));
+        }
+
+        return socket;
     }
 };
 
