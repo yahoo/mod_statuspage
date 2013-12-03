@@ -5,7 +5,8 @@
     "version": "0.0.1",
     "dependencies": {
 	"process-watcher": "*",
-        "ejs": "~0.8.3"
+        "ejs": "~0.8.3",
+        "bl": "~0.6.0"
     },
     "devDependencies": {
         "express": "~3.3.5",
