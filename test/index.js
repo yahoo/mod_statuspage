@@ -371,6 +371,45 @@ var tests = {
         'code should be 200': function (topic) {
             assert.equal(topic.code, 200);
         }
+    },
+    'response page should have proper error code and message': {
+        topic: function () {
+            var fn = mod_status({
+                    check: function () { return false; },
+                    errCode: 403,
+                    errMessage: 'Auth ERROR'
+                }),
+                code = null,
+                next = false,
+                text = null;
+
+            fn({
+                url: '/status'
+            }, {
+                writeHead: function (c) {
+                    code = c;
+                },
+                end: function (d) {
+                    text = d;
+                }
+            }, function () {
+                next = true;
+            });
+            return {
+                code: code,
+                text: text,
+                next: next
+            };
+        },
+        'next should be false': function (topic) {
+            assert.isFalse(topic.next);
+        },
+        'data should be Auth ERROR': function (topic) {
+            assert.equal(topic.text, 'Auth ERROR');
+        },
+        'code should be 403': function (topic) {
+            assert.equal(topic.code, 403);
+        }
     }
 };
 

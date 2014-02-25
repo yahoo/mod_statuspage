@@ -2,7 +2,10 @@
     "name": "mod_statuspage",
     "description": "mod_statuspage for Node",
     "author": "Vinit Sacheti <vsacheti@yahoo.com>",
-    "version": "0.0.1",
+    "version": "0.0.2",
+    "contributors": [
+        "Sylvio Marcondes <sylivom@yahoo-inc.com>"
+    ],
     "dependencies": {
 	"process-watcher": "*",
         "ejs": "~0.8.3",
