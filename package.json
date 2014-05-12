@@ -9,7 +9,8 @@
     "dependencies": {
 	"process-watcher": "*",
         "ejs": "~0.8.3",
-        "bl": "~0.6.0"
+        "bl": "~0.6.0",
+	"moment" : "*"
     },
     "devDependencies": {
         "express": "~3.3.5",

@@ -54,7 +54,10 @@ var mockResponse = { '20799':
             utcstart: 1337010906,
             oconns: 0,
             kb_trans: 150,
-            kbs_out: 100
+            kbs_out: 100,
+            health_status_timestamp : 1337010906,
+            health_is_down : true,
+            health_status_code: 200
         }
     }, '22760':
     {
@@ -211,6 +214,23 @@ var tests = {
                 assert.equal(topic.text.worker[i].kbs_out, mockResponse[pid].curr.kbs_out);
                 assert.equal(topic.text.worker[i].kbs_transferred, mockResponse[pid].curr.kb_trans);
                 assert.equal(topic.text.worker[i].start_time, mockResponse[pid].curr.utcstart * 1000);
+                assert.ok(topic.text.worker[i].start_time_format);
+                if (pid === '22760') {
+                    assert.equal(undefined, topic.text.worker[i].health_status_timestamp, 'health timestamp for pid: ' + pid);
+                    assert.equal(undefined, topic.text.worker[i].health_time_format, 'health time format for pid: ' + pid);
+                    assert.equal(undefined, topic.text.worker[i].health_is_down, 'health is down for pid: ' + pid);
+                    assert.equal(undefined, topic.text.worker[i].health_status_code, 'health status code for pid: ' + pid);
+                } else if (pid === '20799'){
+                    assert.ok(mockResponse[pid].curr.health_status_timestamp * 1000,
+                              topic.text.worker[i].health_status_timestamp, 'health timestamp for pid: ' + pid);
+                    assert.ok(topic.text.worker[i].health_time_format, 'health time format for pid: ' + pid);
+                    assert.ok(mockResponse[pid].curr.health_is_down,
+                              topic.text.worker[i].health_is_down, 'health is down for pid: ' + pid);
+                    assert.ok(mockResponse[pid].curr.health_status_code,
+                              topic.text.worker[i].health_status_code, 'health status code for pid: ' + pid);
+                } else {
+                    assert.ok(false, 'unreachable code'); //should not reach here
+                }
             }
             assert.equal(topic.text.hostname, os.hostname());
             assert.equal(topic.text.node_version, process.version);
