@@ -11,7 +11,56 @@ var os = require('os'),
     mod_status = require('../lib/index.js'),
     rightnow = new Date();
 
-var mockResponse = { '20799':
+var mockResponse = { '20780':
+    {
+        last: {
+            cluster: 20780,
+            title: '/home/y/libexec/node',
+            pid: 20780,
+            cpu: 0,
+            user_cpu: 0,
+            sys_cpu: 0,
+            cpuperreq: 0,
+            jiffyperreq: 0,
+            events: 0.03225806451612906,
+            elapsed: 151001.72,
+            ts: 1337011626,
+            mem: 0.57,
+            reqstotal: 100,
+            rps: 20,
+            oreqs: 10,
+            utcstart: 1337010906,
+            oconns: 0,
+            kb_trans: 0,
+            kbs_out: 0
+        },
+        kill: false,
+        curr: {
+            cluster: 20780,
+            title: '/home/y/libexec/node',
+            pid: 20780,
+            cpu: 0,
+            user_cpu: 0,
+            sys_cpu: 0,
+            cpuperreq: 0,
+            jiffyperreq: 0,
+            events: 0,
+            elapsed: 0,
+            ts: 1337011841,
+            mem: 0,
+            reqstotal: 0,
+            rps: 0,
+            oreqs: 0,
+            utcstart: 1337010906,
+            oconns: 0,
+            kb_trans: 0,
+            kbs_out: 0,
+            health_status_timestamp : 1336010926,
+            health_is_down : true,
+            health_status_code: 200
+        }
+    },
+    '20799':
     {
         last: {
             cluster: 20799,
@@ -56,7 +105,7 @@ var mockResponse = { '20799':
             kb_trans: 150,
             kbs_out: 100,
             health_status_timestamp : 1337010906,
-            health_is_down : true,
+            health_is_down : false,
             health_status_code: 200
         }
     }, '22760':
@@ -195,12 +244,13 @@ var tests = {
         'json object returned should have valid values': function (topic) {
             var pid, i;
             assert.equal(topic.text.hostname, os.hostname());
-            assert.equal(topic.text.total_requests, mockResponse['20799'].curr.reqstotal + mockResponse['22760'].curr.reqstotal);
+            assert.equal(topic.text.total_requests,
+                         mockResponse['20799'].curr.reqstotal + mockResponse['22760'].curr.reqstotal);
             assert.equal(topic.text.total_kbs_out, mockResponse['20799'].curr.kbs_out + mockResponse['22760'].curr.kbs_out);
             assert.equal(topic.text.total_kbs_transferred, mockResponse['20799'].curr.kb_trans + mockResponse['22760'].curr.kb_trans);
             assert.equal(topic.text.total_rps, mockResponse['20799'].curr.rps + mockResponse['22760'].curr.rps);
-            assert.equal(topic.text.worker.length, 2);
-            for (i = 0; i < 2; i++) {
+            assert.equal(topic.text.worker.length, 3);
+            for (i = 0; i < 3; i++) {
                 pid = topic.text.worker[i].pid;
                 assert.equal(topic.text.worker[i].cpu, mockResponse[pid].curr.cpu);
                 assert.equal(topic.text.worker[i].mem, mockResponse[pid].curr.mem);
@@ -221,13 +271,16 @@ var tests = {
                     assert.equal(undefined, topic.text.worker[i].health_is_down, 'health is down for pid: ' + pid);
                     assert.equal(undefined, topic.text.worker[i].health_status_code, 'health status code for pid: ' + pid);
                 } else if (pid === '20799'){
-                    assert.ok(mockResponse[pid].curr.health_status_timestamp * 1000,
+                    assert.equal(mockResponse[pid].curr.health_status_timestamp * 1000,
                               topic.text.worker[i].health_status_timestamp, 'health timestamp for pid: ' + pid);
                     assert.ok(topic.text.worker[i].health_time_format, 'health time format for pid: ' + pid);
-                    assert.ok(mockResponse[pid].curr.health_is_down,
+                    assert.equal(mockResponse[pid].curr.health_is_down,
                               topic.text.worker[i].health_is_down, 'health is down for pid: ' + pid);
-                    assert.ok(mockResponse[pid].curr.health_status_code,
+                    assert.equal(mockResponse[pid].curr.health_status_code,
                               topic.text.worker[i].health_status_code, 'health status code for pid: ' + pid);
+                } else if (pid === '20780'){
+                     assert.equal(mockResponse[pid].curr.health_status_timestamp * 1000,
+                              topic.text.worker[i].health_status_timestamp, 'health timestamp for pid: ' + pid);
                 } else {
                     assert.ok(false, 'unreachable code'); //should not reach here
                 }
@@ -237,6 +290,8 @@ var tests = {
             assert.equal(topic.text.os_type, os.type());
             assert.equal(topic.text.os_release, os.release());
             assert.equal(topic.text.cluster_start_time, rightnow.getTime());
+            assert.equal(1337010906, topic.text.latest_health_timestamp);
+            assert.equal(false, topic.text.latest_health_is_down);
         },
         'code should be 200': function (topic) {
             assert.equal(topic.code, 200);
