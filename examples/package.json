@@ -1,0 +1,18 @@
+{
+  "name": "sample_cluster",
+  "version": "0.0.1",
+  "main": "sample_cluster.js",
+  "description": "status page example for sample_cluster",
+  "os": [ "linux" ],
+  "cpu": [ "x64", "ia32" ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yahoo/mod_statuspage.git"
+  },
+  "license": "",
+  "engines": { "node": ">=0.6" },
+  "dependencies": {
+    "monitr": "*"
+  }
+}
+
