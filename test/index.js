@@ -217,12 +217,13 @@ var tests = {
                 code = null,
                 next = false,
                 text = null,
-                self = this;
+                self = this,
+                req = {
+                    url: '/status'
+                };
 
             process.clusterStartTime = rightnow;
-            fn({
-                url: '/status'
-            }, {
+            fn(req, {
                 writeHead: function (c) {
                     code = c;
                 },
@@ -231,7 +232,8 @@ var tests = {
                     self.callback(null, {
                         code: code,
                         text: text,
-                        next: next
+                        next: next,
+                        parsedUrl: req.parsedUrl
                     });
                 }
             }, function () {
@@ -240,6 +242,9 @@ var tests = {
         },
         'next should be false': function (topic) {
             assert.isFalse(topic.next);
+        },
+        'request should be stamped with parsedUrl': function(topic) {
+            assert.isObject(topic.parsedUrl);
         },
         'json object returned should have valid values': function (topic) {
             var pid, i;
@@ -420,7 +425,10 @@ var tests = {
 
             process.clusterStartTime = rightnow;
             fn({
-                url: '/status'
+                parsedUrl : {
+                    pathname : '/status'
+                },
+                url: '/foo' //foo should be ignored as request has a parsedUrl
             }, {
                 writeHead: function (c) {
                     code = c;
