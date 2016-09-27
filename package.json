@@ -1,40 +1,44 @@
 {
-    "name": "mod_statuspage",
-    "description": "mod_statuspage for Node",
-    "author": "Vinit Sacheti <vsacheti@yahoo.com>",
-    "version": "0.0.6",
-    "contributors": [
-        "Sylvio Marcondes <sylivom@yahoo-inc.com>"
-    ],
-    "dependencies": {
-        "ejs": "~0.8.3",
-        "bl": "~0.6.0",
-	"moment" : "*"
-    },
-    "devDependencies": {
-        "express": "~3.3.5",
-        "jshint": "~0.9.0",
-        "yui-lint": "~0.1.1",
-        "istanbul": "~0.1.8",
-        "vows": "*"
-    },
-    "keywords": [
-        "statuspage", "status", "nagios"
-    ],
-    "main": "./lib/index.js",
-    "scripts": {
-        "pretest": "jshint --config ./node_modules/yui-lint/jshint.json ./lib/ ./test/",
-        "test": "istanbul cover --print both vows -- --spec ./test/*.js"
-    },
-    "bugs": { "url" : "http://github.com/yahoo/mod_statuspage/issues" },
-    "licenses":[
-        {
-            "type" : "BSD",
-            "url" : "https://github.com/yahoo/mod_statuspage/blob/master/LICENSE"
-        }
-    ],
-    "repository": {
-        "type":"git",
-        "url":"http://github.com/yahoo/mod_statuspage.git"
+  "name": "mod_statuspage",
+  "description": "mod_statuspage for Node",
+  "author": "Vinit Sacheti <vsacheti@yahoo.com>",
+  "version": "0.0.7",
+  "contributors": [
+    "Sylvio Marcondes <sylivom@yahoo-inc.com>"
+  ],
+  "dependencies": {
+    "ejs": "~0.8.3",
+    "bl": "~0.6.0",
+    "moment": "*"
+  },
+  "devDependencies": {
+    "express": "~3.3.5",
+    "jshint": "~0.9.0",
+    "yui-lint": "~0.1.1",
+    "istanbul": "~0.1.8",
+    "vows": "*"
+  },
+  "keywords": [
+    "statuspage",
+    "status",
+    "nagios"
+  ],
+  "main": "./lib/index.js",
+  "scripts": {
+    "pretest": "jshint --config ./node_modules/yui-lint/jshint.json ./lib/ ./test/",
+    "test": "istanbul cover --print both vows -- --spec ./test/*.js"
+  },
+  "bugs": {
+    "url": "http://github.com/yahoo/mod_statuspage/issues"
+  },
+  "licenses": [
+    {
+      "type": "BSD",
+      "url": "https://github.com/yahoo/mod_statuspage/blob/master/LICENSE"
     }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/yahoo/mod_statuspage.git"
+  }
 }
