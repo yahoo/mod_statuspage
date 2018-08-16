@@ -7,16 +7,16 @@
     "Sylvio Marcondes <sylivom@yahoo-inc.com>"
   ],
   "dependencies": {
+    "bl": "^2.0.1",
     "ejs": "~0.8.3",
-    "bl": "~0.6.0",
-    "moment": "*"
+    "moment": "^2.22.2"
   },
   "devDependencies": {
-    "express": "~3.3.5",
-    "jshint": "~0.9.0",
-    "yui-lint": "~0.1.1",
-    "istanbul": "~0.1.8",
-    "vows": "*"
+    "express": "^4.16.3",
+    "istanbul": "^0.4.5",
+    "jshint": "^2.9.6",
+    "vows": "^0.8.2",
+    "yui-lint": "^0.2.0"
   },
   "keywords": [
     "statuspage",
