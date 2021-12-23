@@ -7,15 +7,15 @@
     "Sylvio Marcondes <sylivom@yahoo-inc.com>"
   ],
   "dependencies": {
-    "bl": "^2.0.1",
-    "ejs": "^2.5.5",
-    "moment": "^2.22.2"
+    "bl": "^5.0.0",
+    "ejs": "^3.1.6",
+    "moment": "^2.29.1"
   },
   "devDependencies": {
-    "express": "^4.16.3",
+    "express": "^4.17.2",
     "istanbul": "^0.4.5",
-    "jshint": "^2.9.6",
-    "vows": "^0.8.2",
+    "jshint": "^2.13.1",
+    "vows": "^0.8.3",
     "yui-lint": "^0.2.0"
   },
   "keywords": [
